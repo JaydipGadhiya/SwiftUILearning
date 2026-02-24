@@ -18,7 +18,7 @@ struct ContentView: View {
                 Text(friend)
             }
             .listStyle(.plain)
-            .searchable(text: $searchText)
+            .searchable(text: $searchText, placement: .navigationBarDrawer)
             .onChange(of: searchText) {
                 if searchText.isEmpty {
                     filteredFriendList = friendList
