@@ -30,7 +30,22 @@ struct ContentView: View {
                         VStack(alignment: .leading) {
                             Text(company.name)
                                 .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.gray)
+                                .lineLimit(2)
                             Text(company.industry)
+                                .foregroundStyle(.blue)
+                                .font(.subheadline)
+                                .fontWeight(.regular)
+                            Text(company.country)
+                                .font(.subheadline)
+                                .foregroundStyle(.blue)
+                                .fontWeight(.regular)
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Text(company.industry)
+                                .font(.subheadline)
                         }
                     }
                 }
