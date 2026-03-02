@@ -1,0 +1,50 @@
+//
+//  ContentView.swift
+//  MVVMLearning
+//
+//  Created by Jaydip Gadhiya on 02/03/26.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    @StateObject private var viewModel = ProductListViewModel(webservice: Webservice())
+    var body: some View {
+        NavigationStack {
+            VStack {
+                List(viewModel.products) { product in
+                    HStack(spacing: 10) {
+                        AsyncImage(url: URL(string: product.image)) { image in
+                            image
+                                .frame(width: 60, height: 60)
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(width: 60, height: 60)
+                        
+                        VStack(alignment: .leading, spacing: 6.0) {
+                            Text(product.title)
+                                .font(.footnote)
+                            Text(product.category.capitalized)
+                                .font(.footnote)
+                                .foregroundStyle(.gray)
+                        }
+                    }
+                    .listStyle(.plain)
+                }.task {
+                    await viewModel.populateProducts()
+                }
+            }
+        }
+        .navigationTitle("ProductList")
+        .navigationBarTitleDisplayMode(.large)
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ContentView()
+    }
+}
