@@ -15,9 +15,17 @@ enum NetworkError: Error {
 
 class Webservice {
     
+    private var baseURL: URL
+    
+    init(baseURL: URL) {
+        self.baseURL = baseURL
+    }
+    
     func getProduct() async throws -> [Product] {
         
-        guard let  url = URL(string: "https://fakestoreapi.com/products") else { throw NetworkError.badURL }
+        guard let  url = URL(string: EndPoints.products.path, relativeTo: baseURL) else {
+            throw NetworkError.badURL
+        }
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {

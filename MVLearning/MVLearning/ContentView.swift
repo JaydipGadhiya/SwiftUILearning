@@ -52,5 +52,13 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().environmentObject(StoreModel(webservice: Webservice()))
+    var configration = Configuration()
+    ContentView()
+        .environmentObject(
+            StoreModel(
+                webservice: Webservice(
+                    baseURL: configration.environment.baseURL
+                )
+            )
+        )
 }
